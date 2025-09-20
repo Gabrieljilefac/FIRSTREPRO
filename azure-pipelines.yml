@@ -11,9 +11,18 @@ pool:
 
 steps:
 - script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'Gabrieljilefac'
+   
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - task: SqlAzureDacpacDeployment@1
+    inputs:
+      AuthenticationType: 'server'
+      ServerName: 'batiserver.database.windows.net'
+      DatabaseName: 'DB2'
+      SqlUsername: 'Jilefac'
+      SqlPassword: 'Password1'
+      deployType: 'SqlTask'
+      SqlFile: 'Create database GiTDB; Go  Use GiTDB; GO  create table Employee  (ID int primary key identity(1,1), FName Varchar(50)); GO  insert into Employee Values (''BATIGAB''); Go'
+      IpDetectionMethod: 'AutoDetect'
